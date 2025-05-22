@@ -56,11 +56,12 @@ void FSlateQuickstartWindowModule::ShutdownModule()
 
 TSharedRef<SDockTab> FSlateQuickstartWindowModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
 {
-	FText WidgetText = FText::Format(
+	/*FText WidgetText = FText::Format(
 		LOCTEXT("WindowWidgetText", "Hey friend, add code to {0} in {1} to override this window's contents"),
 		FText::FromString(TEXT("FSlateQuickstartWindowModule::OnSpawnPluginTab")),
 		FText::FromString(TEXT("SlateQuickstartWindow.cpp"))
 		);
+	*/
 
 	return SNew(SDockTab)
 		.TabRole(ETabRole::NomadTab)

@@ -25,6 +25,7 @@ void SQuickStartWindowMenu::Construct(const FArguments& InArgs)
 						[
 							SNew(SButton)
 								.Text(FText::FromString("Click me.. or don't."))
+								.OnClicked(this, &SQuickStartWindowMenu::OnTestButtonClicked)
 						]
 				]
 			+ SVerticalBox::Slot()
@@ -40,8 +41,12 @@ void SQuickStartWindowMenu::Construct(const FArguments& InArgs)
 						+ SHorizontalBox::Slot()
 						.VAlign(VAlign_Top)
 						[
+							// A checkbox, and what functions should be called when it a) throws a state change event and 
+							// b) when its state is being requested. Maybe.
 							SNew(SCheckBox)
-
+								.OnCheckStateChanged(this, &SQuickStartWindowMenu::OnTestCheckboxStateChanged)
+								.IsChecked(this, &SQuickStartWindowMenu::IsTestBoxChecked)
+								
 						]
 				]
 			+ SVerticalBox::Slot()
@@ -59,9 +64,20 @@ void SQuickStartWindowMenu::Construct(const FArguments& InArgs)
 	
 }
 
-void onTestCheckboxStateChanged(ECheckBoxState NewState)
+void SQuickStartWindowMenu::OnTestCheckboxStateChanged(ECheckBoxState NewState)
 {
-	bIsTextBoxChecked = NewState == ECheckBoxState::Checked ? true : false;
+	bIsTestBoxChecked = NewState == ECheckBoxState::Checked ? true : false;
+}
+
+ECheckBoxState SQuickStartWindowMenu::IsTestBoxChecked() const
+{
+	return bIsTestBoxChecked ? ECheckBoxState::Checked : ECheckBoxState::Unchecked;
+}
+
+FReply SQuickStartWindowMenu::OnTestButtonClicked()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Hey what's crackin? The checkbox is %s"), (bIsTestBoxChecked ? TEXT("Checked") : TEXT("Unchecked")));
+	return(FReply::Handled());
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
